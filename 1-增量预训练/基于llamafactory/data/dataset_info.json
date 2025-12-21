@@ -1,0 +1,8 @@
+{
+  "data1": {
+      "file_name": "prose.jsonl",
+      "columns": {
+        "prompt": "text"
+      }
+    }
+}

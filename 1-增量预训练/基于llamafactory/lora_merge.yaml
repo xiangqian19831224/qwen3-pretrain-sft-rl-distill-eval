@@ -1,0 +1,12 @@
+### model
+model_name_or_path: ../../model.Qwen/Qwen3-0.6B
+adapter_name_or_path: output/lora/pretrain
+template: qwen3
+trust_remote_code: true
+
+### export
+export_dir: output/lora/pretrain_merge
+export_size: 1
+export_device: cpu  # choices: [cpu, auto]
+export_legacy_format: false
+

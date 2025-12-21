@@ -1,0 +1,149 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vllm-config
+data:
+  MODEL_PATH: "/data/model/sft_merge"
+  WORLD_SIZE: "4"
+  TENSOR_PARALLEL_SIZE: "2"
+  PIPELINE_PARALLEL_SIZE: "2"
+  GPU_MEMORY_UTILIZATION: "0.85"
+  MAX_NUM_SEQS: "256"
+  MAX_MODEL_LEN: "8192"
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vllm-master
+spec:
+  serviceName: vllm-master
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vllm-master
+  template:
+    metadata:
+      labels:
+        app: vllm-master
+    spec:
+      containers:
+      - name: vllm-master
+        image: vllm-qwen3:latest
+        ports:
+        - containerPort: 8000
+          name: api
+        - containerPort: 8265
+          name: dashboard
+        envFrom:
+        - configMapRef:
+            name: vllm-config
+        env:
+        - name: MASTER_IP
+          value: "vllm-master-0.vllm-master.default.svc.cluster.local"
+        - name: MASTER_PORT
+          value: "29500"
+        - name: RAY_ADDRESS
+          value: "vllm-master-0.vllm-master.default.svc.cluster.local:6379"
+        resources:
+          requests:
+            nvidia.com/gpu: 2
+            memory: "32Gi"
+            cpu: "8"
+          limits:
+            nvidia.com/gpu: 2
+            memory: "64Gi"
+            cpu: "16"
+        volumeMounts:
+        - name: model-volume
+          mountPath: /data/model
+          readOnly: true
+        command: ["bash", "vllm_distributed_master.sh"]
+      volumes:
+      - name: model-volume
+        persistentVolumeClaim:
+          claimName: model-pvc
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: vllm-worker
+spec:
+  serviceName: vllm-worker
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vllm-worker
+  template:
+    metadata:
+      labels:
+        app: vllm-worker
+    spec:
+      containers:
+      - name: vllm-worker
+        image: vllm-qwen3:latest
+        envFrom:
+        - configMapRef:
+            name: vllm-config
+        env:
+        - name: MASTER_IP
+          value: "vllm-master-0.vllm-master.default.svc.cluster.local"
+        - name: MASTER_PORT
+          value: "29500"
+        - name: WORKER_RANK
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: RAY_ADDRESS
+          value: "vllm-master-0.vllm-master.default.svc.cluster.local:6379"
+        resources:
+          requests:
+            nvidia.com/gpu: 2
+            memory: "32Gi"
+            cpu: "8"
+          limits:
+            nvidia.com/gpu: 2
+            memory: "64Gi"
+            cpu: "16"
+        volumeMounts:
+        - name: model-volume
+          mountPath: /data/model
+          readOnly: true
+        command: ["bash", "vllm_distributed_worker.sh"]
+      volumes:
+      - name: model-volume
+        persistentVolumeClaim:
+          claimName: model-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vllm-master-service
+spec:
+  selector:
+    app: vllm-master
+  ports:
+  - name: api
+    port: 8000
+    targetPort: 8000
+    protocol: TCP
+  - name: dashboard
+    port: 8265
+    targetPort: 8265
+    protocol: TCP
+  type: LoadBalancer
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: model-pvc
+spec:
+  accessModes:
+  - ReadOnlyMany
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: fast-ssd

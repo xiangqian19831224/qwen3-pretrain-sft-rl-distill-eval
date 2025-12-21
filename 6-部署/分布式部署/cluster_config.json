@@ -1,0 +1,38 @@
+{
+    "model_path": "../../model/sft_merge",
+    "world_size": 4,
+    "tensor_parallel_size": 2,
+    "pipeline_parallel_size": 2,
+    "api_key": "your-api-key-here",
+    "master": {
+        "ip": "192.168.1.100",
+        "port": 29500,
+        "user": "username",
+        "work_dir": "/path/to/deployment"
+    },
+    "workers": [
+        {
+            "ip": "192.168.1.101",
+            "user": "username",
+            "work_dir": "/path/to/deployment"
+        },
+        {
+            "ip": "192.168.1.102",
+            "user": "username",
+            "work_dir": "/path/to/deployment"
+        }
+    ],
+    "resource_config": {
+        "gpu_memory_utilization": 0.85,
+        "max_num_seqs": 256,
+        "max_model_len": 8192,
+        "dtype": "float16",
+        "enable_prefix_caching": true,
+        "block_size": 16
+    },
+    "monitoring": {
+        "enable_ray_dashboard": true,
+        "dashboard_port": 8265,
+        "log_level": "info"
+    }
+}
