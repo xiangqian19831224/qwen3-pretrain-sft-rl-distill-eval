@@ -1,3 +1,18 @@
+### 作者信息
+
+    联系人： 刘向前  
+    微信：   13552482980
+    QQ:     1012088761 
+
+### 部分参考(方便的话帮他们点个赞)
+
+- [Qwen3 FineTuning Playground 仓库](https://github.com/lijiayi-ai/Qwen3-FineTuning-Playground) — Qwen3 微调演练平台
+- [multi-reward 医学推理项目](https://github.com/18520339/multi-reward-medical-reasoning) — 医学推理多奖励相关代码
+- [知乎专栏：大模型微调全流程解析](https://zhuanlan.zhihu.com/p/1905976602019464591) — 微调流程讲解
+- [博客：CSDN 大模型微调总结](https://blog.csdn.net/hhhhhhhhhhwwwwwwwwww/article/details/148145089) — 微调实战 & 经验
+- [阿里云：深度学习微调文章](https://developer.aliyun.com/article/1663178) — 阿里云技术文章
+- [博客：Git 使用进阶详解](https://blog.csdn.net/gitblog_00831/article/details/150752889) — Git 常见操作教程
+
 ### 1.配置环境
 
 ```bash
@@ -133,7 +148,6 @@ python 3-强化/RM/rm_train.py \
     --max_datasize 1000 
 ```
 
-
 ```bash
 # 合并模型
 
@@ -181,6 +195,7 @@ python 4-蒸馏/distill.py \
     --alpha 0.7 \
     --temperature 1
 ```
+
 ```bash
 # 合并模型
 
