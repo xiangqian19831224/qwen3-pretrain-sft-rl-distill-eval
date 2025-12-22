@@ -1,4 +1,4 @@
-curl http://localhost:8000/v1/completions \
+curl http://localhost:8801/v1/completions \
     -H "Content-Type: application/json" \
     -d '{
         "model": "./model/sft_merge",

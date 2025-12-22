@@ -4,12 +4,12 @@
 # 适用于 Qwen3-32B 模型
 
 # 配置参数
-MODEL_PATH="../../model/sft_merge"
-MASTER_IP="192.168.1.100"  # 请替换为实际的主节点IP
+MODEL_PATH="../../output/sft_merge"
+MASTER_IP="192.168.0.107"  # 请替换为实际的主节点IP
 MASTER_PORT="29500"
 WORLD_SIZE="4"             # 总GPU数量 (根据实际配置修改)
-TENSOR_PARALLEL_SIZE="2"    # 每个节点的GPU数量
-PIPELINE_PARALLEL_SIZE="2"  # 流水并行大小
+TENSOR_PARALLEL_SIZE="1"    # 每个节点的GPU数量
+PIPELINE_PARALLEL_SIZE="1"  # 流水并行大小
 
 # 网络配置
 export VLLM_USE_RAY=1
