@@ -1,0 +1,47 @@
+analysis_report: false
+api_url: http://127.0.0.1:8801/v1/chat/completions
+chat_template: null
+dataset_args:
+  data_collection:
+    dataset_id: evalscope/Qwen3-Test-Collection
+    filters:
+      remove_until: </think>
+dataset_dir: /home/liuxq/.cache/modelscope/hub/datasets
+dataset_hub: modelscope
+datasets:
+- data_collection
+debug: false
+eval_backend: Native
+eval_batch_size: 128
+eval_config: null
+eval_type: openai_api
+evalscope_version: 1.4.0
+generation_config:
+  batch_size: 128
+  max_tokens: 30000
+  n: 1
+  stream: true
+  temperature: 0.6
+  timeout: 60000
+  top_k: 20
+  top_p: 0.95
+ignore_errors: false
+judge_model_args: {}
+judge_strategy: auto
+judge_worker_num: 1
+limit: 100
+model: Qwen3-32B
+model_args: {}
+model_id: Qwen3-32B
+model_task: text_generation
+no_timestamp: false
+repeats: 1
+rerun_review: false
+sandbox_manager_config: {}
+sandbox_type: docker
+seed: 42
+stream: true
+timeout: 60000
+use_cache: null
+use_sandbox: false
+work_dir: ./outputs/20251222_155844

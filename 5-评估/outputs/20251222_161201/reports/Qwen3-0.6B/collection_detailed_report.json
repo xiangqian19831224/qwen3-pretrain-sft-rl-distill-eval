@@ -1,0 +1,140 @@
+{
+  "subset_level": [
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "law",
+      "micro_avg.": 0.1,
+      "count": 10
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "math",
+      "micro_avg.": 0.3,
+      "count": 10
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "other",
+      "micro_avg.": 0.3,
+      "count": 10
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "physics",
+      "micro_avg.": 0.2222,
+      "count": 9
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "psychology",
+      "micro_avg.": 0.2222,
+      "count": 9
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "biology",
+      "micro_avg.": 0.125,
+      "count": 8
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "philosophy",
+      "micro_avg.": 0.0,
+      "count": 8
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "business",
+      "micro_avg.": 0.4286,
+      "count": 7
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "chemistry",
+      "micro_avg.": 0.1429,
+      "count": 7
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "health",
+      "micro_avg.": 0.1429,
+      "count": 7
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "economics",
+      "micro_avg.": 0.1667,
+      "count": 6
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "engineering",
+      "micro_avg.": 0.2,
+      "count": 5
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "computer science",
+      "micro_avg.": 0.6667,
+      "count": 3
+    },
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "subset_name": "history",
+      "micro_avg.": 0.0,
+      "count": 1
+    }
+  ],
+  "dataset_level": [
+    {
+      "task_type": "exam",
+      "dataset_name": "mmlu_pro",
+      "micro_avg.": 0.21,
+      "macro_avg.": 0.2155,
+      "weighted_avg.": 0.21,
+      "count": 100
+    }
+  ],
+  "task_level": [
+    {
+      "task_type": "exam",
+      "micro_avg.": 0.21,
+      "macro_avg.": 0.2155,
+      "weighted_avg.": 0.21,
+      "count": 100
+    }
+  ],
+  "tag_level": [
+    {
+      "tags": "en",
+      "micro_avg.": 0.21,
+      "macro_avg.": 0.2155,
+      "weighted_avg.": 0.21,
+      "count": 100
+    }
+  ],
+  "category_level": [
+    {
+      "category0": "Qwen3",
+      "category1": "English",
+      "micro_avg.": 0.21,
+      "macro_avg.": 0.2155,
+      "weighted_avg.": 0.21,
+      "count": 100
+    }
+  ]
+}
