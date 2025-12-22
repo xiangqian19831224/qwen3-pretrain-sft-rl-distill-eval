@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+# 基于全参数微调的grpo训练
+# 工程上一般只基于lora训练
 import os
 import torch
 from datasets import load_dataset
