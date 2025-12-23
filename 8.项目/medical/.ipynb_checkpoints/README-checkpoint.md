@@ -123,7 +123,7 @@ Compared to the original formulation in the [DeepSeekMath](https://arxiv.org/pdf
 
 ![](./images/results.png)
 
-👉 You can refer to our [slides](文档/slides.pdf) and [full report](./report.pdf) for more details on the methodology and results analysis.
+👉 You can refer to our [slides](./slides.pdf) and [full report](./report.pdf) for more details on the methodology and results analysis.
 
 ## VI. References
 

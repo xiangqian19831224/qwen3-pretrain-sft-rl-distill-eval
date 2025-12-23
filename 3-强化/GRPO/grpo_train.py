@@ -54,19 +54,29 @@ def load_prompts(dataset_path, tokenizer, system_prompt):
     prompts = []
     for item in data:
         if 'conversations' in item:
-            # 提取用户输入
+            # 提取用户输入和回答
             user_input = ""
+            answer = ""
             for turn in item['conversations']:
                 if turn.get('from') == 'human':
                     user_input = turn['value']
-                    break
+                elif turn.get('from') == 'gpt':
+                    answer = turn['value']
             
             if user_input:
-                # 构建GRPO格式的prompt
-                formatted_prompt = f"{system_prompt}\n\n问题：{user_input}\n答案："
+                # 构建GRPO格式的prompt - 消息列表格式
+                prompt_messages = [
+                    {'role': 'system', 'content': system_prompt},
+                    {'role': 'user', 'content': user_input}
+                ]
+                
+                # 如果没有找到answer，使用chosen或空字符串
+                if not answer:
+                    answer = item.get("chosen", {}).get("value", "") if "chosen" in item else ""
+                
                 prompts.append({
-                    "prompt": formatted_prompt,
-                    "reference": item.get("chosen", {}).get("value", "") if "chosen" in item else ""
+                    "prompt": prompt_messages,
+                    "answer": answer
                 })
     return prompts
 
@@ -75,21 +85,40 @@ def reward_fn(prompts, completions, completion_ids=None, **kwargs):
     """
     GRPO的奖励函数
     prompts: List[str] 输入 prompt
-    completions: List[str] 模型生成文本
+    completions: List[str] 或 List[List[str]] 模型生成文本
     completion_ids: token id（可忽略）
     返回 List[float] 奖励值
     """
     rewards = []
     for prompt, completion in zip(prompts, completions):
+        # 处理completion可能是字符串或列表的情况
+        if isinstance(completion, list):
+            # 如果是列表，取第一个元素或拼接所有元素
+            if completion and len(completion) > 0:
+                completion_text = completion[0] if isinstance(completion[0], str) else str(completion[0])
+            else:
+                completion_text = ""
+        else:
+            completion_text = str(completion)
+        
         # 简单的奖励策略：如果生成了内容则奖励1，否则0
         # 可以根据需要添加更复杂的奖励逻辑
-        if len(completion.strip()) > 0:
+        if len(completion_text.strip()) > 0:
             rewards.append(1.0)
         else:
             rewards.append(0.0)
     return rewards
 
-
+'''
+GRPO训练的单个数据格式样例：
+{
+    'prompt': [
+        {'role': 'system', 'content': SYSTEM_PROMPT},
+        {'role': 'user', 'content': '你多大年龄'},
+    ],
+    'answer': '我今年85'
+}
+'''
 class GRPODataset(Dataset):
     """GRPO训练数据集包装器"""
     def __init__(self, prompts_data):
@@ -99,11 +128,20 @@ class GRPODataset(Dataset):
         return len(self.prompts_data)
 
     def __getitem__(self, idx):
-        item = self.prompts_data[idx]
-        return {
-            "prompt": item["prompt"],
-            "reference": item["reference"]
-        }
+        # 处理批量索引的情况
+        if isinstance(idx, list):
+            items = [self.prompts_data[i] for i in idx]
+            return {
+                "prompt": [item["prompt"] for item in items],
+                "answer": [item["answer"] for item in items]
+            }
+        else:
+            # 处理单个索引的情况
+            item = self.prompts_data[idx]
+            return {
+                "prompt": item["prompt"],
+                "answer": item["answer"]
+            }
 
 
 def main():

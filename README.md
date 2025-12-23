@@ -15,6 +15,8 @@
 
 ### 1.配置环境
 
+    调试平台： rtx5060ti
+
 ```bash
 conda create -n qwen3_ft python=3.10
 conda activate qwen3_ft
