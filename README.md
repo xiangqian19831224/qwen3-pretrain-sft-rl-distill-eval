@@ -26,11 +26,11 @@ pip install -r requirements.txt
 ### 2.模型下载
 
 ```bash
-  modelscope download --model Qwen/Qwen3-0.6B --local_dir ./Qwen3/Qwen3-0.6B
+  modelscope download --model Qwen/Qwen3-0.6B --local_dir ./model/Qwen/Qwen3-0.6B
 ```
 
 ```bash
-    modelscope download --model Qwen/Qwen3-1.7B --local_dir ./Qwen3/Qwen3-1.7B
+    modelscope download --model Qwen/Qwen3-1.7B --local_dir ./model/Qwen/Qwen3-1.7B
 ```
 
 ### 3.增量预训练
